@@ -36,19 +36,27 @@ footer{text-align:center;color:var(--muted);padding:22px;font-size:.85rem}
 .certificate{border:8px double var(--teal);padding:28px;text-align:center;margin-top:15px;background:#fff}
 .certificate h2{font-size:2rem}.certificate .name{font-size:1.5rem;border-bottom:1px solid #789;padding:8px;display:inline-block;min-width:230px}
 input[type=text]{padding:11px;border:1px solid var(--line);border-radius:9px;width:100%;max-width:420px;font:inherit}
+.hero{display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap}.hero svg{width:210px;max-width:60%;flex:none}
+.posture button svg{width:56px;height:72px;float:right;margin-left:6px}
+.sim{display:grid;grid-template-columns:minmax(200px,300px) 1fr;gap:18px;align-items:center}@media(max-width:640px){.sim{grid-template-columns:1fr}}
+.simfig{background:linear-gradient(#e8f6f3,#fff);border:1px solid var(--line);border-radius:14px;padding:8px}.simfig svg{width:100%;max-height:330px}
+#tiltRange{width:100%;accent-color:var(--teal)}.meter{height:22px;background:#e5eef1;border-radius:20px;overflow:hidden;margin:8px 0}.meter span{display:block;height:100%;width:0;transition:width .25s,background .25s}
+.timerbox{display:flex;gap:18px;align-items:center;flex-wrap:wrap}.ring{position:relative;width:150px;height:150px}.ring svg{transform:rotate(-90deg)}.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:2rem;color:var(--navy)}
+.far{position:relative;overflow:hidden;height:110px;flex:1;min-width:220px;border-radius:14px;background:linear-gradient(#bfe6f2,#e8f6f3 70%,#bcd9a8 70%)}.far i{position:absolute;bottom:30%;font-style:normal;font-size:1.7rem;transition:transform 1s}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 @media print{body{background:white}.no-print,header,nav,main>section:not(#certificate),footer{display:none!important}#certificate{display:block!important;border:0;box-shadow:none;margin:0}.certificate{border:8px double #087f8c;min-height:85vh;display:flex;flex-direction:column;justify-content:center}}
 </style>
 </head>
 <body>
-<header><div class="wrap">
+<header><div class="wrap hero"><div>
 <div class="eyebrow">Interactive EdTech Learning Lab · Digital Wellbeing</div>
 <h1>Digital Health &<br>Tech Neck Awareness Lab</h1>
 <p>Explore safer ways to use smartphones, tablets and computers. Learn through posture experiments, real-life decisions and a knowledge challenge.</p>
 <strong>Look Up. Sit Right. Move More. Stay Healthy.</strong>
-</div></header>
+</div><svg viewBox="0 0 210 210" role="img" aria-label="Illustration of a person looking down at a phone, with a neck-strain highlight"><circle cx="105" cy="105" r="100" fill="#ffffff22"/><path d="M92 205 L100 120" stroke="#fff" stroke-width="26" stroke-linecap="round"/><g transform="rotate(38 100 120)"><line x1="100" y1="120" x2="100" y2="95" stroke="#f3c9a5" stroke-width="12"/><circle cx="100" cy="72" r="26" fill="#f3c9a5"/><path d="M122 70l10 8-10 4z" fill="#e0a982"/><path d="M76 66a26 26 0 0 1 48-10 26 26 0 0 0-48 10z" fill="#123b52"/></g><path d="M110 150 L150 165 L160 135" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round"/><rect x="150" y="112" width="14" height="30" rx="3" fill="#f0b84b" transform="rotate(-18 157 127)"/><path d="M98 112 q14-20 40 -6" stroke="#f0b84b" stroke-width="4" fill="none" stroke-dasharray="5 5"/><circle cx="103" cy="118" r="14" fill="#a83b3b" opacity=".55"><animate attributeName="r" values="10;18;10" dur="2s" repeatCount="indefinite"/></circle></svg></div></header>
 <main>
 <nav class="no-print">
-<a href="#learn">Learn</a><a href="#experiment">Experiment</a><a href="#scenarios">Scenarios</a><a href="#quiz">Quiz</a><a href="#routine">My routine</a><a href="#teacher">Teacher area</a><a href="#certificate">Certificate</a>
+<a href="#learn">Learn</a><a href="#experiment">Experiment</a><a href="#simulator">Simulator</a><a href="#eyes">Eye timer</a><a href="#scenarios">Scenarios</a><a href="#quiz">Quiz</a><a href="#routine">My routine</a><a href="#teacher">Teacher area</a><a href="#certificate">Certificate</a>
 </nav>
 <section id="learn">
 <span class="tag">Module 1 · Understand</span><h2>What is Tech Neck?</h2>
@@ -77,6 +85,28 @@ input[type=text]{padding:11px;border:1px solid var(--line);border-radius:9px;wid
 </div>
 <button id="analyse" style="margin-top:14px">Analyse my habits</button><div id="analysis" class="feedback" aria-live="polite" hidden></div>
 <p class="muted"><small>Break intervals are practical reminders, not rigid medical rules. Change position regularly and respond to your comfort.</small></p>
+</section>
+
+<section id="simulator">
+<span class="tag">Module 2B · Simulate</span><h2>Head-tilt neck load simulator</h2>
+<p>Drag the slider to tilt the head forward and watch the estimated strain on the neck change.</p>
+<div class="sim"><div class="simfig" id="simFig" role="img" aria-label="Side view figure whose head tilts forward as the slider moves"></div>
+<div><label for="tiltRange"><b>Forward head tilt: <span id="tiltVal">0</span>°</b></label>
+<input type="range" id="tiltRange" min="0" max="60" value="0" step="1">
+<div class="meter" aria-hidden="true"><span id="loadBar"></span></div>
+<div class="big" id="loadText">5 kg</div><div id="loadMsg" class="feedback" aria-live="polite"></div>
+<div style="margin-top:8px"><button class="secondary" data-tilt="0">Neutral 0°</button> <button class="secondary" data-tilt="30">Phone 30°</button> <button class="secondary" data-tilt="60">Deep look-down 60°</button></div>
+<p class="muted"><small>Values are approximate estimates from a published biomechanical model (about 5 kg at 0° up to about 27 kg at 60° effective load). Real loads vary between people. This is a teaching illustration, not a measurement or diagnosis.</small></p></div></div>
+</section>
+
+<section id="eyes">
+<span class="tag">Module 2C · Practise</span><h2>20-20-20 eye and posture break timer</h2>
+<p>Every 20 minutes, look at something about 20 feet (6 metres) away for 20 seconds. Press start to try one break now.</p>
+<div class="timerbox"><div class="ring"><svg width="150" height="150" viewBox="0 0 150 150"><circle cx="75" cy="75" r="64" fill="none" stroke="#e5eef1" stroke-width="12"/><circle id="ringArc" cx="75" cy="75" r="64" fill="none" stroke="#087f8c" stroke-width="12" stroke-linecap="round" stroke-dasharray="402" stroke-dashoffset="0"/></svg><b id="ringNum">20</b></div>
+<div class="far" aria-hidden="true"><i id="farTree" style="left:10%">🌳</i><i id="farHill" style="left:45%">⛰️</i><i id="farBird" style="left:75%">🐦</i></div></div>
+<p id="timerMsg" class="feedback" aria-live="polite">Ready. Sit comfortably, then press start.</p>
+<button id="timerBtn">Start 20-second break</button>
+<p class="muted"><small>While you look away, relax your shoulders, lower them gently and take a slow breath.</small></p>
 </section>
 
 <section id="scenarios">
@@ -164,6 +194,21 @@ document.querySelectorAll("[data-posture]").forEach(b=>b.addEventListener("click
  const msg={neutral:"Good choice. A comfortably raised screen and relaxed shoulders can help you maintain a more neutral neck position.",down:"This position can increase muscular demand when held for a long time. Raise the device and take regular movement breaks.",bed:"Unsupported or awkward positions may strain your neck. Choose a supported position and avoid holding one posture for too long."};
  document.getElementById("postureFeedback").textContent=msg[posture];
 }));
+
+function fig(a,gaze,body){return `<svg viewBox="0 0 200 280" aria-hidden="true"><g transform="rotate(${body||0} 92 270)"><path d="M92 270L100 150" stroke="#123b52" stroke-width="24" stroke-linecap="round"/><path d="M100 160L128 200L152 168" stroke="#087f8c" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="146" y="136" width="12" height="32" rx="3" fill="#f0b84b" transform="rotate(-18 152 152)"/><g transform="rotate(${a} 100 150)"><line x1="100" y1="150" x2="100" y2="124" stroke="#f3c9a5" stroke-width="13"/><circle cx="100" cy="98" r="26" fill="#f3c9a5"/><path d="M122 96l10 8-10 4z" fill="#e0a982"/><circle cx="114" cy="94" r="2.5" fill="#19313d"/><path d="M75 92a26 26 0 0 1 50-12 26 26 0 0 0-50 12z" fill="#123b52"/>${gaze?'<line x1="114" y1="94" x2="150" y2="144" stroke="#a83b3b" stroke-width="2" stroke-dasharray="4 4"/>':''}</g></g></svg>`}
+const pb=document.querySelectorAll("[data-posture]");[[0,0],[40,0],[28,-35]].forEach((v,i)=>pb[i].insertAdjacentHTML("afterbegin",fig(v[0],0,v[1])));
+const pts=[[0,12],[15,27],[30,40],[45,49],[60,60]];
+function loadLb(a){for(let i=1;i<pts.length;i++)if(a<=pts[i][0]){const[x0,y0]=pts[i-1],[x1,y1]=pts[i];return y0+(y1-y0)*(a-x0)/(x1-x0)}return 60}
+const tr=document.getElementById("tiltRange");
+function updTilt(){const a=+tr.value,kg=loadLb(a)*0.4536;document.getElementById("simFig").innerHTML=fig(a,1);document.getElementById("tiltVal").textContent=a;
+document.getElementById("loadText").textContent="≈ "+kg.toFixed(1)+" kg effective load";const pct=(kg-5)/22*100,bar=document.getElementById("loadBar");bar.style.width=Math.max(6,pct)+"%";bar.style.background=a<15?"#2e9e6b":a<40?"#f0b84b":"#a83b3b";
+document.getElementById("loadMsg").textContent=a<15?"Near neutral: the head is balanced over the shoulders.":a<40?"Moderate tilt: fine briefly, but avoid holding it for long. Raise the device.":"Deep tilt: strain builds up when held. Lift the screen to eye level and take a break."}
+tr.oninput=updTilt;document.querySelectorAll("[data-tilt]").forEach(b=>b.onclick=()=>{tr.value=b.dataset.tilt;updTilt()});updTilt();
+let tInt=null;const arc=document.getElementById("ringArc"),num=document.getElementById("ringNum"),tb=document.getElementById("timerBtn"),tm=document.getElementById("timerMsg");
+function farMove(on){["farTree","farHill","farBird"].forEach((id,i)=>document.getElementById(id).style.transform=on?`scale(${1.3+i*.15}) translateY(-6px)`:"none")}
+tb.onclick=()=>{if(tInt){clearInterval(tInt);tInt=null;tb.textContent="Start 20-second break";tm.textContent="Stopped. Press start to try again.";arc.style.strokeDashoffset=0;num.textContent=20;farMove(0);return}
+let t=20;tb.textContent="Stop";tm.textContent="Look at something far away. Relax your shoulders and breathe slowly.";farMove(1);
+tInt=setInterval(()=>{t--;num.textContent=t;arc.style.strokeDashoffset=402*(1-t/20);if(t<=0){clearInterval(tInt);tInt=null;tb.textContent="Start 20-second break";tm.textContent="Well done. Gently roll your shoulders and change position before you continue.";farMove(0);arc.style.strokeDashoffset=0;num.textContent=20}},1000)};
 document.getElementById("analyse").onclick=()=>{
  const d=document.getElementById("duration").value,b=document.getElementById("breaks").value;
  let advice=posture==="neutral"?"Your selected posture is a helpful starting point. Keep shoulders relaxed and vary your position.":posture==="down"?"Try raising your screen so you do not need to bend your head down for long periods.":"Try using your device in a supported position rather than an awkward position in bed.";
